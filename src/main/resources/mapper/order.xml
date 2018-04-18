@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hoomsun.ordercenter.dao.OrderMapper">
+
+	<resultMap type="com.hoomsun.ordercenter.entity.Order" id="order">
+		<result property="id" column="id"/>
+		<result property="orderNo" column="order_no"/>
+		<result property="status" column="status"/>
+		<result property="priority" column="priority"/>
+		<result property="tradeType" column="trade_type"/>
+		<result property="tradeState" column="trade_state"/>
+		<result property="stateInput" column="state_input"/>
+		<result property="createTime" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="version" column="version"/>
+		<result property="relatedOrderNo" column="related_order_no"/>
+		<result property="bussNo" column="buss_no"/>
+	</resultMap>
+
+	<!-- 根据ID获取单条信息-->
+	<select id="getByNo" resultMap="order">
+		SELECT * from order_ where order_no=#{orderNo}
+	</select>
+
+	<!-- 修改订单状态-->
+	<update id = "updateOrderStatus">
+		UPDATE order_ set status = #{status}, version = version + 1 where order_no = #{orderNo}
+	</update>
+
+	<update id = "updateOrderRelate">
+		UPDATE order_ set related_order_no = #{relateOrderId} where order_no = #{orderNo}
+	</update>
+
+	<insert id = "insertOrder" parameterType="Order">
+		insert into order_
+		(order_no,status,priority,trade_type,trade_state,state_input,create_time,update_time,version,related_order_no,buss_no)
+		values(
+		#{orderNo},#{status},#{priority},#{tradeType},#{tradeState},#{stateInput},#{createTime},#{updateTime},#{version},#{relatedOrderNo},#{bussNo}
+		)
+	</insert>
+
+	<update id="updateOrder" parameterType="Order">
+		update order_
+		<set>
+			<if test="status != null and status != ''">
+				status=#{status},
+			</if>
+			<if test="tradeState != null and tradeState != ''">
+				trade_state=#{tradeState},
+			</if>
+			<if test="stateInput != null and stateInput != ''">
+				state_input=#{stateInput},
+			</if>
+			<if test="bussNo != null and bussNo != ''">
+				buss_no=#{bussNo},
+			</if>
+			<if test="updateTime != null and updateTime != ''">
+				update_time=#{updateTime},
+			</if>
+			<if test="orderNo != null and orderNo != ''">
+				order_no=#{orderNo},
+			</if>
+			version = version + 1
+		</set>
+		where order_no=#{orderNo};
+	</update>
+
+	<update id="updateSuspOrder" parameterType="Order">
+		update order_
+		set version = version + 1
+		<if test="status != null and status != ''">
+			,status=#{status}
+		</if>
+		<if test="stateInput != null and stateInput != ''">
+			,state_input=#{stateInput}
+		</if>
+		<if test="bussNo != null and bussNo != ''">
+			,buss_no=#{bussNo}
+		</if>
+		where order_no=#{orderNo} and status = 'SUSP';
+	</update>
+
+	<delete id="deleteForBackup">
+		DELETE
+		o
+		FROM
+		order_ o
+		WHERE
+		o.`status` = 'DONE'
+		AND TIMESTAMPDIFF(
+		DAY,
+		DATE_FORMAT(o.create_time, '%y-%m-%d'),
+		DATE_FORMAT(SYSDATE(), '%y-%m-%d')
+		)>= #{dayOffset};
+	</delete>
+
+	<!-- 按条件批量查询订单 -->
+	<select id="getOrderListByTradeTypeAndStatus" resultMap="order">
+		SELECT * from order_ where 0=0
+		and status != 'DONE' and status != 'FATAL'
+		and trade_type in ('AUTO_BUY_TRANSFER', 'AUTO_LOAN_BID', 'BIND_CARD_CONFIRM', 'BUY_TRANSFER', 'CREATE_ACCOUNT_CUST', 'CREATE_RECHARGE_CUST', 'LOAN_BID', 'LOAN_BID_BACK', 'MOBILE_UPDATE', 'PLAT_CHARGE', 'PLAT_TRANS', 'PLATFORM_ACCOUNT_CONVERSE','UPLAN_SERVICE_FEE','U_ADVANCE_QUIT_FEE_COLLECT','UNBIND_AND_NEW_BIND','CASH_BACK')
+		and trade_state in ('AUTO_REPAY_CALLBACK', 'AUTO_REPAY_INIT', 'BIND_SUCCESS', 'CANCEL', 'ESCROW_SUCCESS', 'INIT', 'MGMT_ESCROW_SUCCESS', 'UPDATE_SUCCESS','U_SERVICE_FEE_CONFIRM','U_ADVANCE_QUIT_FEE_CONFIRM','CREATE_ACC_FAIL','CARD_SUCCESS','LOAN_PASS_SUCCESS')
+		<if test="createTimeBefore != null ">
+			and create_time &lt;= #{createTimeBefore}
+		</if>
+		<if test="retryTime != null ">
+			and version &lt;= #{retryTime}
+		</if>
+		order by id asc limit #{pageSize}
+	</select>
+
+</mapper>

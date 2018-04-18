@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hoomsun.ordercenter.dao.OrderRuleMapper">
+
+    <resultMap type="com.hoomsun.ordercenter.entity.OrderRule" id="orderRule">
+        <result property="id" column="id"/>
+        <result property="tradeType" column="trade_type"/>
+        <result property="currTradeState" column="curr_trade_state"/>
+        <result property="currStateService" column="curr_state_service"/>
+        <result property="currServiceType" column="curr_service_type"/>
+        <result property="currStateOutput" column="curr_state_output"/>
+        <result property="nextStatus" column="next_status"/>
+        <result property="nextPriority" column="next_priority"/>
+        <result property="nextTradeState" column="next_trade_state"/>
+        <result property="backTradeType" column="back_trade_type"/>
+        <result property="backTradeState" column="back_trade_state"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isRetry" column="is_retry"/>
+        <result property="coefficient" column="coefficient"/>
+        <result property="retryTime" column="retry_time"/>
+        <result property="isDelay" column="is_delay"/>
+        <result property="delayTime" column="delay_time"/>
+    </resultMap>
+
+	<cache eviction="LRU" type="com.hoomsun.ordercenter.util.utils.cache.MybatisRedisCache"/>
+    <!-- 根据ID获取单条信息-->
+    <select id="getOrderRule" resultMap="orderRule">
+        SELECT * from order_rule 
+        	where trade_type=#{tradeType} and curr_trade_state =#{tradeState}
+	        <if test ="output != null and output!='' ">
+	        	and curr_state_output =#{output}
+	        </if>
+    </select>
+    
+    <!-- 全量查询 -->
+    <select id="getOrderRuleList" resultMap="orderRule">
+        SELECT * from order_rule 
+    </select>
+
+    <!-- 取得需要重试的订单规则 -->
+    <select id="getOrderRuleRetry" resultMap="orderRule">
+        SELECT trade_type, curr_trade_state, delay_time, retry_time from order_rule where is_retry = 1 group by trade_type, curr_trade_state, delay_time, retry_time
+    </select>
+
+</mapper>
