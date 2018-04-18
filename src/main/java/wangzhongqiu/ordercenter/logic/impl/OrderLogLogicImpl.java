@@ -10,8 +10,6 @@ import wangzhongqiu.ordercenter.logic.OrderLogLogic;
 
 /**
  * 订单日志业务处理类
- * 
- *
  */
 @Service
 public class OrderLogLogicImpl implements OrderLogLogic {
