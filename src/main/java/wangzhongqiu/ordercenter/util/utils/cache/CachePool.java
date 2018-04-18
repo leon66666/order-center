@@ -22,7 +22,7 @@ public class CachePool {
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(1024);
         config.setMaxIdle(200);
-        config.setMaxWaitMillis(1000l);
+        config.setMaxWaitMillis(1000L);
         PropertiesConfiguration redisConfig = null;
         try {
             redisConfig = new PropertiesConfiguration("config-order.properties");
