@@ -20,7 +20,7 @@ public class ServiceTest {
     private OrderCenterService orderCenterService;
 
     @Test
-    public void test() throws Exception {
+    public void test() {
         String orderNo = "123";
         JSONObject stateInputJSON = new JSONObject();
         stateInputJSON.put("orderNo", "111");
