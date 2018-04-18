@@ -2,9 +2,6 @@ package wangzhongqiu.ordercenter.util.utils;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-/**
- * 
- */
 public class JacksonJsonUtil {
     static volatile ObjectMapper objectMapper = new ObjectMapper();
 

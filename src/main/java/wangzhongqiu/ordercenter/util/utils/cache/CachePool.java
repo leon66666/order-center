@@ -33,9 +33,6 @@ public class CachePool {
         int port = Integer.parseInt(redisConfig.getString("redis.port"));
         String password = redisConfig.getString("redis.auth");
         int timeout = Integer.parseInt(redisConfig.getString("redis.timeout"));
-        //String url = ResourceBundle.getBundle("config.properties").getString("pay.redis.url");
-        //String url = "10.13.215.227";
-
         pool = new JedisPool(config, url, port, timeout, password);
     }
 

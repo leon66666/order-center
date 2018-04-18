@@ -21,7 +21,7 @@ public class ServiceTest {
 
     @Test
     public void test() throws Exception {
-        String orderNo = "123243sdf3e4f4344";
+        String orderNo = "123";
         JSONObject stateInputJSON = new JSONObject();
         stateInputJSON.put("orderNo", "111");
         stateInputJSON.put("detailNo", "111");

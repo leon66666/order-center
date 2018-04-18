@@ -11,12 +11,6 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-/**
- * User: huang
- * Date: 2015/11/30
- * Time: 12:07
- */
-
 public class MybatisRedisCache implements Cache {
     private static final Logger log = LoggerFactory.getLogger(MybatisRedisCache.class);
     /**

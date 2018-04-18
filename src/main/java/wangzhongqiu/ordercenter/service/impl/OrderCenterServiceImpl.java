@@ -88,7 +88,6 @@ public class OrderCenterServiceImpl implements OrderCenterService {
             logic.insertOrder(o);
             orderTransactionManager.commit(txStatus);
             logger.info("new order " + bo.getOrderNo() + " commit " + DateUtil.format(new Date(), DateUtil.DATE_FORMAT_MILLS_SHORT));
-//            Thread.sleep(1000);
         } catch (Exception e) {
             logger.error("newOrder:" + bo.getOrderNo(), e);
             if (txStatus != null)

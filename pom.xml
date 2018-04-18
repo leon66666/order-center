@@ -10,7 +10,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <slf4j.version>1.7.5</slf4j.version>
         <junit.version>4.11</junit.version>
         <mockito-all.version>1.9.5</mockito-all.version>
@@ -30,7 +29,6 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>opensymphony</groupId>
             <artifactId>quartz-all</artifactId>
@@ -161,7 +159,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector.version}</version>
         </dependency>
-
 
         <!-- mybatis核心包 -->
         <dependency>
@@ -304,102 +301,6 @@
             </build>
         </profile>
         <profile>
-            <id>test26</id>
-            <build>
-                <filters>
-                    <filter>env/test26.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
-            <id>test27</id>
-            <build>
-                <filters>
-                    <filter>env/test27.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
-            <id>test28</id>
-            <build>
-                <filters>
-                    <filter>env/test28.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
-            <id>test29</id>
-            <build>
-                <filters>
-                    <filter>env/test29.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
-            <id>test31</id>
-            <build>
-                <filters>
-                    <filter>env/test31.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
-            <id>test32</id>
-            <build>
-                <filters>
-                    <filter>env/test32.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
-            <id>test34</id>
-            <build>
-                <filters>
-                    <filter>env/test34.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
-            <id>test35</id>
-            <build>
-                <filters>
-                    <filter>env/test35.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
-            <id>test36</id>
-            <build>
-                <filters>
-                    <filter>env/test36.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
-            <id>test37</id>
-            <build>
-                <filters>
-                    <filter>env/test37.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
-            <id>test38</id>
-            <build>
-                <filters>
-                    <filter>env/test38.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
-            <id>test39</id>
-            <build>
-                <filters>
-                    <filter>env/test39.properties</filter>
-                </filters>
-            </build>
-        </profile>
-        <profile>
             <id>release</id>
             <build>
                 <filters>
@@ -432,18 +333,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <name>Release Maven Repository</name>
-            <url>http://nexus.hoomxb.com:7069/nexus/content/repositories/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>Snapshots Maven Repository</name>
-            <url>http://nexus.hoomxb.com:7069/nexus/content/repositories/snapshots</url>
-            <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
 </project>
